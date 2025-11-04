@@ -20,7 +20,7 @@ public class TaskListController {
         this.taskListService = taskListService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     List<TaskListDto> getAllTaskLists(){
         return this.taskListService.findAllTaskLists();
     }

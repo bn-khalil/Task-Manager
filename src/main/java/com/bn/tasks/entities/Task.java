@@ -4,7 +4,9 @@ import com.bn.tasks.enums.TaskPriority;
 import com.bn.tasks.enums.TaskStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
@@ -33,7 +35,7 @@ public class Task {
 
     private LocalDateTime dataToStart;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_list_id", nullable = false )
     private TaskList taskList;
 
