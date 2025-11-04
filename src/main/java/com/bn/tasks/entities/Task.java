@@ -33,7 +33,7 @@ public class Task {
 
     private LocalDateTime dataToStart;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "task_list_id", nullable = false )
     private TaskList taskList;
 
@@ -41,8 +41,7 @@ public class Task {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(nullable = false, insertable = false)
+    @Column(insertable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
 }

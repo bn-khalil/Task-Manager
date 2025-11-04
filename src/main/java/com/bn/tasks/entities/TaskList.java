@@ -27,10 +27,12 @@ public class TaskList {
 
     private String description;
 
-    @OneToMany(mappedBy = "taskList", cascade ={
+    @OneToMany(mappedBy = "taskList"
+            , cascade = {
             CascadeType.REMOVE,
             CascadeType.PERSIST
-    })
+        }
+    )
     private List<Task> tasks;
 
     @CreationTimestamp

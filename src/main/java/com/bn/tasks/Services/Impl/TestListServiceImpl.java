@@ -4,6 +4,7 @@ import com.bn.tasks.Repositories.TaskListRepository;
 import com.bn.tasks.Services.TaskListService;
 import com.bn.tasks.dto.TaskListDto;
 import com.bn.tasks.entities.TaskList;
+import com.bn.tasks.exceptions.TaskListException;
 import com.bn.tasks.mappers.TaskListMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,12 +35,19 @@ public class TestListServiceImpl implements TaskListService {
 
     @Override
     public TaskListDto findTaskList(UUID taskListId) {
-        TaskList taskList = this.taskListRepository.findById(taskListId).orElse(null);
+        TaskList taskList = this.taskListRepository.findTaskListById(taskListId).orElse(null);
+        if (taskList == null)
+            throw new TaskListException("Task List Not Found!");
         return this.taskListMapper.toDto(taskList);
     }
 
     @Override
     public TaskListDto addNewTaskList(TaskListDto taskListDto) {
+        if (taskListDto.id() != null)
+            throw new IllegalArgumentException("task list already has and id!");
+        if (taskListDto.title() == null || taskListDto.title().isEmpty())
+            throw new IllegalArgumentException("task list title is required!");
+
         TaskList taskList = this.taskListMapper.fromDto(taskListDto);
         taskList = this.taskListRepository.save(taskList);
         return this.taskListMapper.toDto(taskList);
