@@ -2,6 +2,7 @@ package com.bn.tasks.controllers;
 
 import com.bn.tasks.Services.TaskService;
 import com.bn.tasks.dto.TaskDto;
+import com.bn.tasks.dto.TaskListDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,5 +40,19 @@ public class TaskController {
     ResponseEntity<TaskDto> getTask(@PathVariable("task_id") UUID taskId){
         TaskDto taskDto = this.taskService.getTask(taskId);
         return ResponseEntity.status(HttpStatus.OK).body(taskDto);
+    }
+
+    @PutMapping("/{task_id}")
+    ResponseEntity<TaskDto> editTaskList(
+            @PathVariable("task_id") UUID taskId,
+            @RequestBody TaskDto taskDto){
+        TaskDto editedTask = this.taskService.editTask(taskId, taskDto);
+        return ResponseEntity.status(HttpStatus.OK).body(editedTask);
+    }
+
+    @DeleteMapping("/{task_id}")
+    ResponseEntity<TaskListDto> deleteTaskList(@PathVariable("task_id") UUID taskId){
+        this.taskService.deleteTask(taskId);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -60,4 +60,25 @@ public class TaskServiceImpl implements TaskService {
         task = this.taskRepository.save(task);
         return this.taskMapper.toDto(task);
     }
+
+    @Override
+    public TaskDto editTask(UUID taskId, TaskDto taskDto) {
+        Task task = this.taskRepository.findById( taskId ).orElseThrow(
+                ()-> new NotFoundException("Task Not Found with id = " + taskId)
+        );
+        task.setTitle(taskDto.title());
+        task.setDescription(taskDto.description());
+        task.setStatus(taskDto.status());
+        task.setPriority(taskDto.priority());
+        task.setDataToStart(taskDto.dateToStart());
+        Task newTask = this.taskRepository.save(task);
+        return this.taskMapper.toDto(newTask);
+    }
+
+    @Override
+    public void deleteTask(UUID taskId) {
+        if(!this.taskRepository.existsById(taskId))
+            throw new NotFoundException("task you want to delete not found!");
+        this.taskRepository.deleteById(taskId);
+    }
 }

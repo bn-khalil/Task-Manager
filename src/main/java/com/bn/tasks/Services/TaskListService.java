@@ -10,4 +10,7 @@ public interface TaskListService {
     List<TaskListDto> findAllTaskLists();
     TaskListDto findTaskList(UUID taskListId);
     TaskListDto addNewTaskList(TaskListDto taskListDto);
+    TaskListDto editTaskList(UUID taskListId, TaskListDto taskListDto);
+    void deleteTaskList(UUID taskListId);
+
 }

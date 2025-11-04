@@ -9,4 +9,6 @@ public interface TaskService {
     TaskDto getTask(UUID id);
     List<TaskDto> getTasksWithTaskListId(UUID taskListId);
     TaskDto createTask(TaskDto taskDto, UUID taskListId);
+    TaskDto editTask(UUID taskId, TaskDto taskDto);
+    void deleteTask(UUID taskId);
 }

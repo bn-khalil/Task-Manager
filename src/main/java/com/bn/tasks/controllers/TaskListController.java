@@ -36,6 +36,20 @@ public class TaskListController {
     ResponseEntity<TaskListDto> getTaskList(@PathVariable("task_list_id") UUID taskListId){
         TaskListDto taskListDto = this.taskListService.findTaskList(taskListId);
         return ResponseEntity.status(HttpStatus.OK).body(taskListDto);
-
     }
+
+    @PutMapping("/{task_list_id}")
+    ResponseEntity<TaskListDto> editTaskList(
+            @PathVariable("task_list_id") UUID taskListId,
+            @RequestBody TaskListDto taskListDto){
+        TaskListDto editedTaskList = this.taskListService.editTaskList(taskListId, taskListDto);
+        return ResponseEntity.status(HttpStatus.OK).body(editedTaskList);
+    }
+
+    @DeleteMapping("/{task_list_id}")
+    ResponseEntity<TaskListDto> deleteTaskList(@PathVariable("task_list_id") UUID taskListId){
+        this.taskListService.deleteTaskList(taskListId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

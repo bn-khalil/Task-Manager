@@ -52,4 +52,23 @@ public class TestListServiceImpl implements TaskListService {
         taskList = this.taskListRepository.save(taskList);
         return this.taskListMapper.toDto(taskList);
     }
+
+    @Override
+    public TaskListDto editTaskList(UUID taskListId, TaskListDto taskListDto) {
+        TaskList taskList = this.taskListRepository.findById( taskListId ).orElseThrow(
+                ()-> new NotFoundException("Task List Not Found with id = " + taskListId)
+        );
+        taskList.setTile(taskListDto.title());
+        taskList.setDescription(taskListDto.description());
+
+        TaskList newTaskList = this.taskListRepository.save(taskList);
+        return this.taskListMapper.toDto(newTaskList);
+    }
+
+    @Override
+    public void deleteTaskList(UUID taskListId) {
+        if(!this.taskListRepository.existsById(taskListId))
+            throw new NotFoundException("task list you want to delete not found!");
+        this.taskListRepository.deleteById(taskListId);
+    }
 }
