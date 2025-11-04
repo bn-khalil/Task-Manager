@@ -3,6 +3,8 @@ package com.bn.tasks.controllers;
 import com.bn.tasks.Services.TaskService;
 import com.bn.tasks.dto.TaskDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,20 +22,22 @@ public class TaskController {
     }
 
     @GetMapping
-    List<TaskDto> getTasks(@PathVariable("task_list_id") UUID taskListId){
-        System.out.println(taskListId);
-        return this.taskService.getTasksWithTaskListId(taskListId);
+    ResponseEntity<List<TaskDto>> getTasks(@PathVariable("task_list_id") UUID taskListId){
+        List<TaskDto> tasksDto = this.taskService.getTasksWithTaskListId(taskListId);
+        return ResponseEntity.status(HttpStatus.OK).body(tasksDto);
     }
 
     @PostMapping
-    TaskDto createNewTask(
+    ResponseEntity<TaskDto> createNewTask(
             @PathVariable("task_list_id") UUID taskListId,
             @RequestBody TaskDto taskDto ) {
-        return this.taskService.createTask(taskDto, taskListId);
+        TaskDto newTaskDto = this.taskService.createTask(taskDto, taskListId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newTaskDto);
     }
 
     @GetMapping("/{task_id}")
-    TaskDto getTask(@PathVariable("task_id") UUID taskId){
-        return this.taskService.getTask(taskId);
+    ResponseEntity<TaskDto> getTask(@PathVariable("task_id") UUID taskId){
+        TaskDto taskDto = this.taskService.getTask(taskId);
+        return ResponseEntity.status(HttpStatus.OK).body(taskDto);
     }
 }
