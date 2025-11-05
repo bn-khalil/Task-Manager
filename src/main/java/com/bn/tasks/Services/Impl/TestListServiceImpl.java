@@ -45,8 +45,6 @@ public class TestListServiceImpl implements TaskListService {
     public TaskListDto addNewTaskList(TaskListDto taskListDto) {
         if (taskListDto.id() != null)
             throw new IllegalArgumentException("task list already has and id!");
-        if (taskListDto.title() == null || taskListDto.title().isEmpty())
-            throw new IllegalArgumentException("task list title is required!");
 
         TaskList taskList = this.taskListMapper.fromDto(taskListDto);
         taskList = this.taskListRepository.save(taskList);
