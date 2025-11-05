@@ -27,6 +27,10 @@ public class TaskList {
 
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     @OneToMany(mappedBy = "taskList"
             , cascade = {
             CascadeType.REMOVE,
