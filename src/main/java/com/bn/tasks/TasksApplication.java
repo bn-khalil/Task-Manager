@@ -1,14 +1,7 @@
 package com.bn.tasks;
 
-import com.bn.tasks.Services.TaskListService;
-import com.bn.tasks.dto.TaskListDto;
-import com.bn.tasks.entities.TaskList;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import java.util.UUID;
 
 @SpringBootApplication
 public class TasksApplication {

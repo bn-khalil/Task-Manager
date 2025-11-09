@@ -16,13 +16,14 @@ import java.util.UUID;
 @AllArgsConstructor
 @Data
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(nullable = false, updatable = false)
     private UUID id;
 
-    @Column(name = "username" , nullable = false, unique = true )
+    @Column(name = "userName" , nullable = false, unique = true )
     private String userName;
 
     @Column(nullable = false, unique = true)
@@ -32,6 +33,10 @@ public class User {
     private String password;
 
     private String token;
+
+    private Integer validation;
+
+    private Boolean isValidated;
 
     @OneToMany(mappedBy = "user")
     private List<TaskList> taskLists;

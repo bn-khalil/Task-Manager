@@ -9,7 +9,7 @@ import java.util.UUID;
 public interface TaskListService {
     List<TaskListDto> findAllTaskLists();
     TaskListDto findTaskList(UUID taskListId);
-    TaskListDto addNewTaskList(TaskListDto taskListDto);
+    TaskListDto addNewTaskList(TaskListDto taskListDto, UUID user_id);
     TaskListDto editTaskList(UUID taskListId, TaskListDto taskListDto);
     void deleteTaskList(UUID taskListId);
 

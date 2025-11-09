@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "task_list")
+@Table(name = "task_lists")
 public class TaskList {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/task-lists")
+@RequestMapping("/api/v1/users/{user_id}/task-lists")
 public class TaskListController {
     private final TaskListService taskListService;
 
@@ -27,8 +27,10 @@ public class TaskListController {
     }
 
     @PostMapping
-    ResponseEntity<TaskListDto> createNewTaskList(@RequestBody TaskListDto taskListDto){
-        TaskListDto newtaskListDto = this.taskListService.addNewTaskList(taskListDto);
+    ResponseEntity<TaskListDto> createNewTaskList(
+            @PathVariable("user_id") UUID user_id,
+            @RequestBody TaskListDto taskListDto){
+        TaskListDto newtaskListDto = this.taskListService.addNewTaskList(taskListDto, user_id);
         return ResponseEntity.status(HttpStatus.CREATED).body(newtaskListDto);
     }
 

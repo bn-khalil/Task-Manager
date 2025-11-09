@@ -1,9 +1,11 @@
 package com.bn.tasks.Services.Impl;
 
 import com.bn.tasks.Repositories.TaskListRepository;
+import com.bn.tasks.Repositories.UserRepository;
 import com.bn.tasks.Services.TaskListService;
 import com.bn.tasks.dto.TaskListDto;
 import com.bn.tasks.entities.TaskList;
+import com.bn.tasks.entities.User;
 import com.bn.tasks.exceptions.NotFoundException;
 import com.bn.tasks.mappers.TaskListMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +19,17 @@ public class TestListServiceImpl implements TaskListService {
 
     final private TaskListRepository taskListRepository;
     final private TaskListMapper taskListMapper;
+    final private UserRepository userRepository;
 
     @Autowired
     public TestListServiceImpl(
             TaskListRepository taskListRepository,
-            TaskListMapper taskListMapper
+            TaskListMapper taskListMapper,
+            UserRepository userRepository
     ) {
         this.taskListRepository = taskListRepository;
         this.taskListMapper = taskListMapper;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -42,11 +47,14 @@ public class TestListServiceImpl implements TaskListService {
     }
 
     @Override
-    public TaskListDto addNewTaskList(TaskListDto taskListDto) {
+    public TaskListDto addNewTaskList(TaskListDto taskListDto, UUID user_id) {
+        User user = this.userRepository.findById(user_id).orElseThrow(
+                ()->new NotFoundException("User Not Found with id = " + user_id )
+        );
         if (taskListDto.id() != null)
             throw new IllegalArgumentException("task list already has and id!");
-
         TaskList taskList = this.taskListMapper.fromDto(taskListDto);
+        taskList.setUser(user);
         taskList = this.taskListRepository.save(taskList);
         return this.taskListMapper.toDto(taskList);
     }

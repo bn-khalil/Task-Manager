@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -15,5 +16,6 @@ public record UserDto(
         String userName,
         @Email
         @NotNull
-        String email
+        String email,
+        List<TaskListDto> taskLists
 ) {}
