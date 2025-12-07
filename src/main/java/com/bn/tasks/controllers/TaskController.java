@@ -3,6 +3,7 @@ package com.bn.tasks.controllers;
 import com.bn.tasks.Services.TaskService;
 import com.bn.tasks.dto.TaskDto;
 import com.bn.tasks.dto.TaskListDto;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,7 @@ public class TaskController {
 
     @PostMapping
     ResponseEntity<TaskDto> createNewTask(
+            @Valid
             @PathVariable("task_list_id") UUID taskListId,
             @RequestBody TaskDto taskDto ) {
         TaskDto newTaskDto = this.taskService.createTask(taskDto, taskListId);
@@ -44,6 +46,7 @@ public class TaskController {
 
     @PutMapping("/{task_id}")
     ResponseEntity<TaskDto> editTaskList(
+            @Valid
             @PathVariable("task_id") UUID taskId,
             @RequestBody TaskDto taskDto){
         TaskDto editedTask = this.taskService.editTask(taskId, taskDto);

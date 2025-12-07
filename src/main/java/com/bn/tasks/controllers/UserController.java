@@ -4,6 +4,7 @@ import com.bn.tasks.Services.UserService;
 import com.bn.tasks.dto.UserDto;
 import com.bn.tasks.entities.User;
 import com.bn.tasks.mappers.UserMapper;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -19,7 +20,9 @@ public class UserController {
     }
 
     @PostMapping
-    public User addNewUser(@RequestBody User user) {
+    public User addNewUser(
+            @Valid
+            @RequestBody User user) {
         return this.userService.createNewUser(user);
     }
 
