@@ -11,11 +11,11 @@ import java.util.UUID;
 @Builder
 public record UserDto(
         UUID Id,
-        @NotNull
+        @NotNull(message = "username not exist!")
         @Size(min = 2, max = 50)
         String userName,
         @Email
-        @NotNull
+        @NotNull(message = "email required!")
         String email,
         List<TaskListDto> taskLists
 ) {}

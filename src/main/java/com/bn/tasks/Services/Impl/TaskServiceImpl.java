@@ -48,10 +48,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDto createTask(TaskDto taskDto, UUID taskListId) {
-        if (taskDto.id() != null)
-            throw new IllegalArgumentException("task list already has and id!");
-        if (taskDto.title() == null || taskDto.title().isEmpty())
-            throw new IllegalArgumentException("task list title is required!");
         TaskList taskList = this.taskListRepository.findById(taskListId).orElseThrow(
                 ()-> new NotFoundException ("Task List Not Found to Add New Task!")
         );

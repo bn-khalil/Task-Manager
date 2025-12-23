@@ -9,7 +9,7 @@ import java.util.UUID;
 @Builder
 public record TaskListDto(
         UUID id,
-        @NotNull String title,
+        @NotNull(message = "taskList title is required!") String title,
         String description,
         List<TaskDto> tasksDto
 ) {}

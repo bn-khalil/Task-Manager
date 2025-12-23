@@ -29,6 +29,7 @@ public class TaskListController {
 
     @PostMapping
     ResponseEntity<TaskListDto> createNewTaskList(
+            @Valid
             @PathVariable("user_id") UUID user_id,
             @RequestBody TaskListDto taskListDto){
         TaskListDto newtaskListDto = this.taskListService.addNewTaskList(taskListDto, user_id);
@@ -55,5 +56,4 @@ public class TaskListController {
         this.taskListService.deleteTaskList(taskListId);
         return ResponseEntity.noContent().build();
     }
-
 }
