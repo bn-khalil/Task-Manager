@@ -25,7 +25,12 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(()->"read");
+        return List.of(
+                () -> "READ",
+                () -> "WRITE",
+                () -> "UPDATE",
+                () -> "DELETE"
+        );
     }
 
     @Override
