@@ -23,6 +23,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse>  login(@RequestBody @Valid UserLoginDto userLoginDto) {
+        System.out.println("yes this is the right what we want");
         return ResponseEntity.status(HttpStatus.OK).body(this.authService.login(userLoginDto));
     }
 
@@ -30,5 +31,4 @@ public class AuthController {
     public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid UserRegisterDto userRegisterDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.authService.register(userRegisterDto));
     }
-
 }

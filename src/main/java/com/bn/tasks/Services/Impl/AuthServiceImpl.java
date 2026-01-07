@@ -36,10 +36,14 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthenticationResponse login(UserLoginDto userLoginDto) {
         Authentication auth = this.authenticationManager.authenticate(
-          new UsernamePasswordAuthenticationToken(userLoginDto.userNameOrEmail(), userLoginDto.password())
+          new UsernamePasswordAuthenticationToken(userLoginDto.username(), userLoginDto.password())
         );
-
-        return null;
+        SecurityUser securityUser = (SecurityUser) auth.getPrincipal();
+        String jwtToken = this.jwtService.generateToken(securityUser);
+        return AuthenticationResponse.builder()
+            .token(jwtToken)
+            .usrename(securityUser.getUsername())
+            .build();
     }
 
     @Override

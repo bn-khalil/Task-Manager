@@ -22,8 +22,8 @@ public class TaskListController {
     }
 
     @GetMapping
-    ResponseEntity<List<TaskListDto>> getAllTaskLists(){
-        List<TaskListDto> taskListDto = this.taskListService.findAllTaskLists();
+    ResponseEntity<List<TaskListDto>> getAllTaskLists(@PathVariable("user_id") UUID user_id){
+        List<TaskListDto> taskListDto = this.taskListService.findAllTaskListsByUserId(user_id);
         return ResponseEntity.status(HttpStatus.OK).body(taskListDto);
     }
 
@@ -32,6 +32,7 @@ public class TaskListController {
             @Valid
             @PathVariable("user_id") UUID user_id,
             @RequestBody TaskListDto taskListDto){
+        System.out.println("this ");
         TaskListDto newtaskListDto = this.taskListService.addNewTaskList(taskListDto, user_id);
         return ResponseEntity.status(HttpStatus.CREATED).body(newtaskListDto);
     }

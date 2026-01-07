@@ -8,7 +8,7 @@ import lombok.Builder;
 public record UserLoginDto(
         @NotEmpty(message = "username or email required!")
         @Size(min = 3, max = 100, message = "username size not valid!")
-        String userNameOrEmail,
+        String username,
 
         @NotEmpty(message = "password required!")
         @Size(min = 8, message = "password length not valid!")

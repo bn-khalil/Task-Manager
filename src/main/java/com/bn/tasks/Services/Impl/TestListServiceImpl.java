@@ -11,6 +11,7 @@ import com.bn.tasks.mappers.TaskListMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,8 +34,10 @@ public class TestListServiceImpl implements TaskListService {
     }
 
     @Override
-    public List<TaskListDto> findAllTaskLists() {
-        List<TaskList> taskLists = this.taskListRepository.findAll();
+    public List<TaskListDto> findAllTaskListsByUserId(UUID user_id) {
+        List<TaskList> taskLists = this.taskListRepository.findTaskListByUserId(user_id);
+        if (taskLists == null || taskLists.isEmpty())
+            return Collections.emptyList();
         return taskLists.stream().map(this.taskListMapper::toDto).toList();
     }
 

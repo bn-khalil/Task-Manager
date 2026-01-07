@@ -30,6 +30,7 @@ public class JwtService {
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        System.out.println("Expiration set to: " + new Date(System.currentTimeMillis() + jwtExpiration));
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
