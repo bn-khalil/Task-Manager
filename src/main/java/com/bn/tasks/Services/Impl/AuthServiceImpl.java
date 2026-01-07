@@ -6,6 +6,7 @@ import com.bn.tasks.dto.AuthenticationResponse;
 import com.bn.tasks.dto.UserLoginDto;
 import com.bn.tasks.dto.UserRegisterDto;
 import com.bn.tasks.entities.User;
+import com.bn.tasks.exceptions.NotFoundException;
 import com.bn.tasks.security.SecurityUser;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,21 +39,22 @@ public class AuthServiceImpl implements AuthService {
           new UsernamePasswordAuthenticationToken(userLoginDto.userNameOrEmail(), userLoginDto.password())
         );
 
-        
-
         return null;
     }
 
     @Override
     public AuthenticationResponse register(UserRegisterDto userRegisterDto) {
-        System.out.println(userRegisterDto);
+        if (this.userRepository.findByUserNameOrEmail(userRegisterDto.email(), userRegisterDto.email()).isPresent())
+                throw new NotFoundException("User already exist!");
+
         User user = new User();
         user.setUserName(userRegisterDto.username());
         user.setEmail(userRegisterDto.email());
         user.setPassword(this.encoder.encode(userRegisterDto.password()));
-        user = this.userRepository.save(user);
 
         String jwtToken = this.jwtService.generateToken(new SecurityUser(user));
+
+        user = this.userRepository.save(user);
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)

@@ -23,7 +23,7 @@ public class User {
     @Column(nullable = false, updatable = false)
     private UUID id;
 
-    @Column(name = "userName" , nullable = false, unique = true )
+    @Column(name = "userName" , nullable = false)
     private String userName;
 
     @Column(nullable = false, unique = true)
